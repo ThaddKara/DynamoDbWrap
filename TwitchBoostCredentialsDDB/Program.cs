@@ -29,10 +29,13 @@ namespace AwsDynamoDBDataModelSample1
 		{
 			AmazonDynamoDBClient amazonDynamoDBClient = new AmazonDynamoDBClient();
 			IPutItem putItem = new PutItem(amazonDynamoDBClient);
+			IDeleteItem deleteItem = new DeleteItem(amazonDynamoDBClient);
 
-			putItem.AddItem("123123123123123211", "te2312313123123123st123");
+			//putItem.AddItem("deleteme", "st123");
+			//deleteItem.Delete("123123123123123211", "te2312313123123123st123");
 
-			//putItem.AddTest("this is a test", "another text att");
+			putItem.AddTest("deleteme", "another text att");
+			//deleteItem.DeleteDoc("deleteme");
 		}
 
 		private static async Task add(IPutItem putItem, string ApiKey, string TwitchName)
