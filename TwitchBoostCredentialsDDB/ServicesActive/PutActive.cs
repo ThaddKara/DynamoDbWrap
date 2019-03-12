@@ -18,6 +18,29 @@ namespace TwitchBoostCredentialsDDB.ServicesActive
             this.amazonDynamoDB = amazonDynamoDB;
         }
 
-        public void AddComplete(string Id, string ApiKey, string 
+        public async Task AddComplete(string ApiKey, string ChannelName, int NumBots, int TimeAlive)
+		{
+			var doc = CompleteRequest(ApiKey, ChannelName, NumBots, TimeAlive);
+
+			await AddCompleteAsync(doc);
+		}
+
+		private Document CompleteRequest(string ApiKey, string ChannelName, int NumBots, int TimeAlive)
+		{
+			Document doc = new Document();
+			doc["Api-Key"] = ApiKey;
+			doc["ChannelName"] = ChannelName;
+			doc["NumBots"] = NumBots.ToString();
+			doc["TimeAlive"] = TimeAlive.ToString();
+
+			return doc;
+		}
+
+		private async Task AddCompleteAsync(Document doc)
+		{
+			Table table = Table.LoadTable(amazonDynamoDB, "Active");
+
+			await table.PutItemAsync(doc);
+		}
     }
 }

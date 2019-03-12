@@ -9,6 +9,6 @@ namespace TwitchBoostCredentialsDDB.ServicesTCreds
 {
     public interface IScanTCreds
     {
-        Search ScanTCredsBots(int numBots);
+        Task ScanTCredsBots(string channelName, int numBots, int timeMin);
     }
 }

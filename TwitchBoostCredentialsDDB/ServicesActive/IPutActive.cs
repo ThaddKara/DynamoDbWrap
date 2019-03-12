@@ -8,5 +8,6 @@ namespace TwitchBoostCredentialsDDB.ServicesActive
 {
     public interface IPutActive
     {
+		Task AddComplete(string ApiKey, string ChannelName, int NumBots, int TimeAlive);
     }
 }
