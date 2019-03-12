@@ -42,7 +42,7 @@ namespace AwsDynamoDBDataModelSample1
             //deleteItem.DeleteDoc("deleteme");
 
             //putItem.AddComplete("test complete another", "test complete name", "false");
-            scanTCreds.ScanTCredsBots("testinput", 1, 1);
+            scanTCreds.ScanTCredsBots("testinput channel", 1, 51);
 
 		}
 

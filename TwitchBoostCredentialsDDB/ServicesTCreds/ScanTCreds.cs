@@ -23,11 +23,12 @@ namespace TwitchBoostCredentialsDDB.ServicesTCreds
             this.amazonDynamoDB = amazonDynamoDB;
         }
 
-        public async Task ScanTCredsBots(string channelName, int numBots, int timeMin)
+        public void ScanTCredsBots(string channelName, int numBots, int timeMin)
         {
 			IPutActive putActive = new PutActive(amazonDynamoDBClient);
 			IPutItem putItem = new PutItem(amazonDynamoDBClient);
-			
+
+			int count = 0;
             Table table = Table.LoadTable(amazonDynamoDB, "TwitchCredentials");
 			List<Document> result = new List<Document>();
 
@@ -44,14 +45,19 @@ namespace TwitchBoostCredentialsDDB.ServicesTCreds
 			do
 			{
 				result = search.GetNextSet();
-
-				foreach (var item in result)
+				Console.WriteLine(result);
+				foreach (Document item in result.Cast<Document>().Take(numBots))
 				{
-					Console.WriteLine(item["Api-Key"]);
-					putActive.AddComplete(item["Api-Key"], channelName, numBots, timeMin);
+					if (item["Api-Key"] != "" && count < numBots)
+					{
+						Console.WriteLine(item["Api-Key"]);
+						putActive.AddComplete(item["Api-Key"], channelName, numBots, timeMin);
 
-					item["IsActive"] = "true";
-					putItem.AddComplete(item["Api-Key"], item["TwitchName"], item["IsActive"]);
+						item["IsActive"] = "true";
+						putItem.AddComplete(item["Api-Key"], item["TwitchName"], item["IsActive"]);
+
+						count++;
+					}
 				}
 			} while (!search.IsDone);
 
@@ -64,7 +70,7 @@ namespace TwitchBoostCredentialsDDB.ServicesTCreds
 
             return new ScanOperationConfig()
             {
-                Limit = numBots,
+                Limit = numBots, //not functional
                 Filter = scanFilter
             };
         }
