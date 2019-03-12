@@ -17,7 +17,6 @@ namespace TwitchBoostCredentialsDDB.ServicesActive
         {
             this.amazonDynamoDB = amazonDynamoDB;
         }
-C:\Users\Main-8.1\Documents\repos\DynamoDbWrap\TwitchBoostCredentialsDDB\ServicesTCreds\ScanTCreds.cs
         public void AddActiveDoc(string ApiKey,
     }
 }
