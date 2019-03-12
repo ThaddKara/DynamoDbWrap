@@ -20,6 +20,7 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using TwitchBoostCredentialsDDB.Services;
 using System.Threading.Tasks;
+using TwitchBoostCredentialsDDB.ServicesTCreds;
 
 namespace AwsDynamoDBDataModelSample1
 {
@@ -28,14 +29,20 @@ namespace AwsDynamoDBDataModelSample1
 		public static void Main(string[] args)
 		{
 			AmazonDynamoDBClient amazonDynamoDBClient = new AmazonDynamoDBClient();
+
 			IPutItem putItem = new PutItem(amazonDynamoDBClient);
 			IDeleteItem deleteItem = new DeleteItem(amazonDynamoDBClient);
+            IScanTCreds scanTCreds = new ScanTCreds(amazonDynamoDBClient);
 
-			//putItem.AddItem("deleteme", "st123");
-			//deleteItem.Delete("123123123123123211", "te2312313123123123st123");
+            //putItem.AddItem("deleteme", "st123");
+            //deleteItem.Delete("123123123123123211", "te2312313123123123st123");
 
-			putItem.AddTest("deleteme", "another text att");
-			//deleteItem.DeleteDoc("deleteme");
+            //putItem.AddTest("deleteme", "another text att");
+            //deleteItem.DeleteDoc("deleteme");
+
+            putItem.AddComplete("test complete another", "test complete name", "false");
+            scanTCreds.ScanTCredsBots(5);
+
 		}
 
 		private static async Task add(IPutItem putItem, string ApiKey, string TwitchName)

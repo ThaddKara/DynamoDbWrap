@@ -18,6 +18,33 @@ namespace TwitchBoostCredentialsDDB.Services
 			this.amazonDynamoDB = amazonDynamoDB;
 		}
 
+        // main
+        public async Task AddComplete(string ApiKey, string TwitchName, string IsActive)
+        {
+            var requestComplete = CompleteRequest(ApiKey, TwitchName, IsActive);
+
+            await AddCompleteAsync(requestComplete);
+        }
+
+        // main
+        private Document CompleteRequest(string ApiKey, string TwitchName, string IsActive)
+        {
+            Document doc = new Document();
+            doc["Api-Key"] = ApiKey;
+            doc["TwitchName"] = TwitchName;
+            doc["IsActive"] = IsActive;
+
+            return doc;
+        }
+
+        // main
+        private async Task AddCompleteAsync(Document doc)
+        {
+            Table table = Table.LoadTable(amazonDynamoDB, "TwitchCredentials");
+
+            await table.PutItemAsync(doc);
+        }
+
 		public async Task AddItem(string ApiKey, string TwitchName)
 		{
 

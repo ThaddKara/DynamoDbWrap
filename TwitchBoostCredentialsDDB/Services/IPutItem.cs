@@ -10,5 +10,6 @@ namespace TwitchBoostCredentialsDDB.Services
 	{
 		Task AddItem(string ApiKey, string TwitchName);
 		Task AddTest(string ApiKey, string TwitchName);
+        Task AddComplete(string ApiKey, string TwitchName, string IsActive);
 	}
 }
